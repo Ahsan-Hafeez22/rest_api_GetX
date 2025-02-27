@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rest_api_project/view/home_view.dart';
 import 'package:get/get.dart';
+import 'package:rest_api_project/view/news_api/home_news_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeView(),
+      // home: const HomeEcommercePage(),
+      home: const HomeNewsPage(),
     );
   }
 }

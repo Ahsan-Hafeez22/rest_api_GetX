@@ -8,14 +8,14 @@ import 'package:rest_api_project/res/component/general_exception_widget.dart';
 import 'package:rest_api_project/res/component/internet_exception_widget.dart';
 import 'package:rest_api_project/view_model/controller/product_controller.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class HomeEcommercePage extends StatefulWidget {
+  const HomeEcommercePage({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<HomeEcommercePage> createState() => _HomeEcommercePageState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeEcommercePageState extends State<HomeEcommercePage> {
   ProductController pc = Get.put(ProductController());
 
   @override

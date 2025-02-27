@@ -1,12 +1,12 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:rest_api_project/data/repository/home_repository.dart';
+import 'package:rest_api_project/data/repository/ecommerce_repo/home_repository_ecommerce.dart';
 import 'package:rest_api_project/data/response/status.dart';
 import 'package:rest_api_project/model/product_model.dart';
 
 class ProductController extends GetxController {
-  final HomeRepository _homeRepository = HomeRepository();
+  final HomeRepositoryEcommerce _homeRepository = HomeRepositoryEcommerce();
 
   final productItems = <ProductModel>[].obs;
   final rxRequestStatus = Status.LOADING.obs;

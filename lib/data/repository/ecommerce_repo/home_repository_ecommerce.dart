@@ -2,7 +2,7 @@ import 'package:rest_api_project/data/network/network_api_service.dart';
 import 'package:rest_api_project/model/product_model.dart';
 import 'package:rest_api_project/res/url/app_urls.dart';
 
-class HomeRepository {
+class HomeRepositoryEcommerce {
   final _apiService = NetworkApiService();
 
   Future<List<ProductModel>> fetchProducts() async {
