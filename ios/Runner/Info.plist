@@ -8,6 +8,10 @@
 	<string>Rest Api Project</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to provide accurate weather updates.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need your location to enhance your experience.</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>

@@ -34,10 +34,28 @@ class _HomeNewsPageState extends State<HomeNewsPage> {
     log("top headline api status => ${nc.rxTopHeadlinesStatus.value}");
 
     return Scaffold(
-      appBar: AppBar(title: const Text("News Page")),
+      appBar: AppBar(
+        title: const Text(
+          'Home Screen',
+          style: TextStyle(color: Colors.white),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icon(
+                Icons.logout,
+                color: Colors.white,
+              ))
+        ],
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.lightBlue,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(height: 10),
             // Category Selector
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),

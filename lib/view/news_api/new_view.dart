@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:transparent_image/transparent_image.dart';
+import 'package:rest_api_project/res/asset/image.dart';
 
 class NewsDetailPage extends StatelessWidget {
   final String title;
@@ -83,15 +83,24 @@ class NewsDetailPage extends StatelessWidget {
             // ),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage, // Add a local placeholder image
-                image: imageUrl,
+              child: FadeInImage(
+                placeholder: AssetImage(ImageAssets
+                    .placeholderNewsImage), // Use a local placeholder image
+                image: NetworkImage(imageUrl),
                 height: 200,
                 width: double.infinity,
                 fit: BoxFit.cover,
                 imageErrorBuilder: (context, error, stackTrace) {
-                  return Icon(Icons.error,
-                      size: 50, color: Colors.red); // Show an error icon
+                  return Container(
+                    height: 200,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(Icons.image_not_supported,
+                        size: 50, color: Colors.grey),
+                  );
                 },
               ),
             ),

@@ -9,7 +9,6 @@ import 'package:rest_api_project/res/component/internet_exception_widget.dart';
 import 'package:rest_api_project/view/news_api/new_view.dart';
 import 'package:rest_api_project/view_model/controller/news_controller.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class CategoryView extends StatefulWidget {
   final String category;

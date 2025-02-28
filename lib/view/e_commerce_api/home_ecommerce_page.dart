@@ -28,8 +28,19 @@ class _HomeEcommercePageState extends State<HomeEcommercePage> {
           'Home Screen',
           style: TextStyle(color: Colors.white),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                // Get.offNamed(RoutesName.appSelectionScreen);
+                Navigator.of(context).pop();
+              },
+              icon: Icon(
+                Icons.logout,
+                color: Colors.white,
+              ))
+        ],
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.amber,
       ),
       body: Obx(() {
         switch (pc.rxRequestStatus.value) {
