@@ -1,3 +1,5 @@
 class ImageAssets {
-  static const String placeholderImage = "assets/images/person_image.png";
+  static const String placeholderPersonImage = "assets/images/person_image.png";
+  static const String placeholderNewsImage =
+      "assets/images/placeholder_image.jpg";
 }

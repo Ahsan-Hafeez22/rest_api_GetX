@@ -28,7 +28,6 @@ class NewsController extends GetxController {
   void setCategoryNews(NewsResponse newsResponse) =>
       categoryNews.value = newsResponse;
 
-  // 🟢 Fetch Top Headlines
   void getTopHeadlines() {
     rxTopHeadlinesStatus.value = Status.LOADING;
     homeRepositoryNews.getNews().then(

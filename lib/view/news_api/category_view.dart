@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rest_api_project/data/response/status.dart';
+import 'package:rest_api_project/res/asset/image.dart';
 import 'package:rest_api_project/res/component/general_exception_widget.dart';
 import 'package:rest_api_project/res/component/internet_exception_widget.dart';
 import 'package:rest_api_project/view/news_api/new_view.dart';
 import 'package:rest_api_project/view_model/controller/news_controller.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class CategoryView extends StatefulWidget {
@@ -28,11 +30,6 @@ class _CategoryViewState extends State<CategoryView> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     log("category api status=> ${nc.rxCategoryStatus.value.toString()}");
     return Scaffold(
@@ -48,71 +45,113 @@ class _CategoryViewState extends State<CategoryView> {
       body: Obx(() {
         switch (nc.rxCategoryStatus.value) {
           case Status.LOADING:
-            return const Center(child: CircularProgressIndicator());
+            return ListView.builder(
+              itemCount: 3,
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.all(16),
+                child: Skeletonizer(
+                  enabled: true,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Container(
+                          height: 200,
+                          width: double.infinity,
+                          color: Colors.grey[300], // Grey box as a placeholder
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Container(
+                        height: 20,
+                        width: 150,
+                        color: Colors.grey[300], // Title placeholder
+                      ),
+                      SizedBox(height: 4),
+                      Container(
+                        height: 14,
+                        width: double.infinity,
+                        color: Colors.grey[300], // Description placeholder
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+
           case Status.COMPLETED:
             return ListView.builder(
               itemCount: nc.categoryNews.value!.articles.length,
               itemBuilder: (context, index) {
                 var article = nc.categoryNews.value!.articles[index];
-                return GestureDetector(
-                  onTap: () {
-                    Get.to(() => NewsDetailPage(
-                        title: article.title,
-                        description: article.description,
-                        imageUrl: article.urlToImage,
-                        publishAt: article.publishedAt,
-                        source: article.source.name,
-                        content: article.content));
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: FadeInImage.memoryNetwork(
-                            placeholder:
-                                kTransparentImage, // Add a local placeholder image
-                            image: article.urlToImage,
-                            height: 200,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                            imageErrorBuilder: (context, error, stackTrace) {
-                              return Icon(Icons.error,
-                                  size: 50,
-                                  color: Colors.red); // Show an error icon
-                            },
+                return Skeletonizer(
+                  enabled: nc.rxCategoryStatus.value == Status.LOADING,
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => NewsDetailPage(
+                          title: article.title,
+                          description: article.description,
+                          imageUrl: article.urlToImage,
+                          publishAt: article.publishedAt,
+                          source: article.source.name,
+                          content: article.content));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: FadeInImage(
+                              placeholder: AssetImage(ImageAssets
+                                  .placeholderNewsImage), // Use a local placeholder image
+                              image: NetworkImage(article.urlToImage),
+                              height: 200,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  height: 200,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Icon(Icons.image_not_supported,
+                                      size: 50, color: Colors.grey),
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                        // ClipRRect(
-                        //   borderRadius: BorderRadius.circular(10),
-                        //   child: Image.network(
-                        //     article.urlToImage,
-                        //     height: 250,
-                        //     width: 400,
-                        //     fit: BoxFit.cover,
-                        //   ),
-                        // ),
-                        // SizedBox(height: 8),
-                        Text(
-                          article.title,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        Divider(thickness: 2),
-                      ],
+                          SizedBox(height: 8),
+                          Text(
+                            article.title,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          Divider(thickness: 2),
+                        ],
+                      ),
                     ),
                   ),
                 );
               },
             );
+
           case Status.ERROR:
             log("Error value: ${nc.categoryError.value}");
             if (nc.categoryError.value ==
                 "Internet Error: No Internet Connection") {
-              return InternetExceptionWidget(onpress: () {});
+              return Center(
+                child: InternetExceptionWidget(onpress: () {
+                  nc.getNewsCategory(widget.category);
+                }),
+              );
             } else {
-              return GeneralException(onpress: () {});
+              return Center(child: GeneralException(onpress: () {
+                nc.getNewsCategory(widget.category);
+              }));
             }
         }
       }),
