@@ -6,6 +6,7 @@ import 'package:rest_api_project/data/response/status.dart';
 import 'package:rest_api_project/model/product_model.dart';
 import 'package:rest_api_project/res/component/general_exception_widget.dart';
 import 'package:rest_api_project/res/component/internet_exception_widget.dart';
+import 'package:rest_api_project/res/route/route_names.dart';
 import 'package:rest_api_project/view_model/controller/product_controller.dart';
 
 class HomeEcommercePage extends StatefulWidget {
@@ -26,17 +27,15 @@ class _HomeEcommercePageState extends State<HomeEcommercePage> {
       appBar: AppBar(
         title: const Text(
           'Home Screen',
-          style: TextStyle(color: Colors.white),
         ),
         actions: [
           IconButton(
               onPressed: () {
-                // Get.offNamed(RoutesName.appSelectionScreen);
                 Navigator.of(context).pop();
               },
               icon: Icon(
                 Icons.logout,
-                color: Colors.white,
+                color: Colors.black,
               ))
         ],
         automaticallyImplyLeading: false,
@@ -86,7 +85,7 @@ class _HomeEcommercePageState extends State<HomeEcommercePage> {
             } else {
               return GeneralException(
                 onpress: () {
-                  pc.refrestFetchProductList(); // ✅ Fixed function call
+                  pc.refrestFetchProductList();
                 },
               );
             }
@@ -106,65 +105,77 @@ class ProductItemDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 3,
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(10),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 120,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  image: DecorationImage(
-                    image: NetworkImage(product.image),
-                  )),
-            ),
-            SizedBox(height: 5),
-            Text(
-              product.title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.green),
-                  child: Row(
-                    children: [
-                      Text(
-                        product.rating.rate.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.white),
-                      ),
-                      SizedBox(width: 5),
-                      Icon(
-                        Icons.star,
-                        size: 12,
-                        color: Colors.white,
-                      ),
-                    ],
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(RoutesName.itemViewScreen, arguments: {
+          'name': product.title,
+          'description': product.description,
+          'image': product.image,
+          'type': product.category.name,
+          'price': product.price,
+          'rating': product.rating.rate.toString(),
+        });
+      },
+      child: Material(
+        elevation: 3,
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 120,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    image: DecorationImage(
+                      image: NetworkImage(product.image),
+                    )),
+              ),
+              SizedBox(height: 5),
+              Text(
+                product.title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.green),
+                    child: Row(
+                      children: [
+                        Text(
+                          product.rating.rate.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.white),
+                        ),
+                        SizedBox(width: 5),
+                        Icon(
+                          Icons.star,
+                          size: 12,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Text(product.category.name, style: TextStyle(fontSize: 10)),
-              ],
-            ),
-            SizedBox(height: 10),
-            Text('${product.price} \$',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-          ],
+                  Text(product.category.name, style: TextStyle(fontSize: 10)),
+                ],
+              ),
+              SizedBox(height: 10),
+              Text('${product.price} \$',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+            ],
+          ),
         ),
       ),
     );

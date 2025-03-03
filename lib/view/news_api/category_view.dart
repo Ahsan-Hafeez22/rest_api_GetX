@@ -6,7 +6,7 @@ import 'package:rest_api_project/data/response/status.dart';
 import 'package:rest_api_project/res/asset/image.dart';
 import 'package:rest_api_project/res/component/general_exception_widget.dart';
 import 'package:rest_api_project/res/component/internet_exception_widget.dart';
-import 'package:rest_api_project/view/news_api/new_view.dart';
+import 'package:rest_api_project/res/route/route_names.dart';
 import 'package:rest_api_project/view_model/controller/news_controller.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -88,13 +88,23 @@ class _CategoryViewState extends State<CategoryView> {
                   enabled: nc.rxCategoryStatus.value == Status.LOADING,
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => NewsDetailPage(
-                          title: article.title,
-                          description: article.description,
-                          imageUrl: article.urlToImage,
-                          publishAt: article.publishedAt,
-                          source: article.source.name,
-                          content: article.content));
+                      Get.toNamed(RoutesName.newsDetailPage, arguments: {
+                        'title': article.title,
+                        'description': article.description,
+                        'imageUrl': article.urlToImage,
+                        'publishAt': article.publishedAt,
+                        'source': article.source.name,
+                        'content': article.content,
+                      });
+                      // Get.to(() => NewsDetailPage(
+                      //     // title: article.title,
+                      //     // description: article.description,
+                      //     // imageUrl: article.urlToImage,
+                      //     // publishAt: article.publishedAt,
+                      //     // source: article.source.name,
+                      //     // content: article.content
+                      //     )
+                      //     );
                     },
                     child: Container(
                       padding: EdgeInsets.all(16),

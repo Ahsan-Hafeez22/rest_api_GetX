@@ -6,9 +6,9 @@ import 'package:rest_api_project/model/news_response.dart';
 import 'package:rest_api_project/res/asset/image.dart';
 import 'package:rest_api_project/res/component/general_exception_widget.dart';
 import 'package:rest_api_project/res/component/internet_exception_widget.dart';
+import 'package:rest_api_project/res/route/route_names.dart';
 import 'package:rest_api_project/utils/category_list.dart';
 import 'package:rest_api_project/view/news_api/category_view.dart';
-import 'package:rest_api_project/view/news_api/new_view.dart';
 import 'package:rest_api_project/view_model/controller/news_controller.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -154,13 +154,14 @@ class _HomeNewsPageState extends State<HomeNewsPage> {
 
                       return GestureDetector(
                         onTap: () {
-                          Get.to(() => NewsDetailPage(
-                              title: articles[index].title,
-                              description: articles[index].description,
-                              imageUrl: articles[index].urlToImage,
-                              publishAt: articles[index].publishedAt,
-                              source: articles[index].source.name,
-                              content: articles[index].content));
+                          Get.toNamed(RoutesName.newsDetailPage, arguments: {
+                            'title': articles[index].title,
+                            'description': articles[index].description,
+                            'imageUrl': articles[index].urlToImage,
+                            'publishAt': articles[index].publishedAt,
+                            'source': articles[index].source.name,
+                            'content': articles[index].content,
+                          });
                         },
                         child: Container(
                           padding: const EdgeInsets.all(16),

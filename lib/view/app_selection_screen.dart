@@ -56,7 +56,7 @@ class AppSelectionScreen extends StatelessWidget {
                 title: 'Weather App',
                 color: Colors.deepPurpleAccent,
                 description:
-                    'A simple and fast weather app that provides word meanings, synonyms, antonyms, pronunciations, and examples instantly.',
+                    'Get real-time weather updates, forecasts, and alerts for your location. Stay prepared with accurate temperature, humidity, and wind details.',
                 imageUrl: 'lottie/weather_lottie.json',
                 onTap: () {
                   Get.toNamed(RoutesName.homeWeatherPage);
@@ -64,6 +64,15 @@ class AppSelectionScreen extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
+            CustomAppSelectionCard(
+                title: 'Employee Detail App',
+                color: Colors.orangeAccent,
+                description:
+                    'Easily access and manage employee profiles, including roles, contact information, and work details. Keep track of your workforce efficiently in one place.',
+                imageUrl: 'lottie/employee_app_lottie.json',
+                onTap: () {
+                  Get.toNamed(RoutesName.homeEmployeePage);
+                }),
           ],
         ),
       ),

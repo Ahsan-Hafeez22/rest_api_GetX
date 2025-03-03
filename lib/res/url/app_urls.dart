@@ -14,4 +14,6 @@ class AppUrls {
   static String weatherUrl(String lat, String long) {
     return 'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=014ce79c9708a34c54d8e022a2619669';
   }
+
+  static const String employeeAppUrl = 'https://dummyjson.com/users';
 }

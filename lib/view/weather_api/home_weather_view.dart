@@ -40,10 +40,19 @@ class _HomeWeatherViewState extends State<HomeWeatherView> {
     return Scaffold(
       backgroundColor: Colors.deepPurpleAccent,
       appBar: AppBar(
-        title: const Text('Weather', style: TextStyle(color: Colors.white)),
-        centerTitle: true,
+        title: const Text('Weather App', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.purple,
         automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icon(
+                Icons.logout,
+                color: Colors.white,
+              ))
+        ],
       ),
       body: Obx(() {
         switch (wc.rxRequestStatus.value) {
@@ -75,7 +84,8 @@ class WeatherDetail extends StatelessWidget {
     String formattedDate =
         DateFormat('EEEE, MMM dd, yyyy').format(DateTime.now());
     String formattedTime = DateFormat('hh:mm a').format(DateTime.now());
-
+    double celciusTemp = (weather.main.temp - 273.15);
+    double feelsLikeTemp = (weather.main.feelsLike - 273.15);
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -88,7 +98,7 @@ class WeatherDetail extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.white)),
           const SizedBox(height: 10),
-          Text('${weather.main.temp.toStringAsFixed(1)}°C',
+          Text('${celciusTemp.toStringAsFixed(1)}°C',
               style: const TextStyle(
                   fontSize: 50,
                   fontWeight: FontWeight.bold,
@@ -106,7 +116,7 @@ class WeatherDetail extends StatelessWidget {
               WeatherInfo(
                   icon: Icons.thermostat,
                   label: 'Feels Like',
-                  value: '${weather.main.feelsLike.toStringAsFixed(1)}°C'),
+                  value: '${feelsLikeTemp.toStringAsFixed(1)}°C'),
               WeatherInfo(
                   icon: Icons.water_drop,
                   label: 'Humidity',
